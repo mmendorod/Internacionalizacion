@@ -1,0 +1,56 @@
+{% extends "body.html"%}
+
+{% block content %}
+
+<div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list"></i>
+                 {{ title }}
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              	{% if object_list %}
+              	<table class="table table-hover">
+				    <thead>
+				      <tr>
+				        <th>Id</th>
+				        <th>Nombres</th>
+				        <th>Apellidos</th>
+				        <th>Edad</th>
+				        <th>Acciones</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				    {% for c in object_list %}	
+				      <tr>
+				        <td>{{ c.id }}</td>
+				        <td>{{ c.nombres}}</td>
+				        <td>{{ c.apellidos}}</td>
+				        <td>{{ c.edad }}</td>
+				        <td width="40%">
+				        	<a href="{% url 'alumnos:editar' c.id %}"><button type="button" class="btn btn-success btn-xs"><i class="far fa-edit"></i></button></a>
+				        	<a href="{% url 'alumnos:eliminar' c.id%}"><button type="button" class="btn btn-warning btn-xs"><i class="far fa-trash-alt"></i></button>
+				        </td>
+				      </tr>
+				    {% endfor %}  
+				    </tbody>
+				  </table>
+				  {% else %}
+
+				  <h1>No hay registros aún</h1>
+
+				  {% endif %}
+                
+              </div>
+
+              <div class="card-footer">
+              		<a href="{% url 'alumnos:crear' %}"><button class="btn btn-primary btn-flat">
+              			<i class="fas fa-plus"></i>  Nuevo registro
+              		</button>
+              </div>
+             
+</div>
+
+{% endblock %}

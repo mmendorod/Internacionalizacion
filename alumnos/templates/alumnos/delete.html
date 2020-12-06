@@ -1,0 +1,33 @@
+{% extends "body.html" %}
+ 
+{% block content %}
+<form method="post" action="">
+	<div class="card card-default">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-list"></i>
+                 {{ title }}
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              <h3>¿Esta seguro de eliminar el registro?</h3>
+              {% csrf_token %}
+              {{ form.as_p }}
+
+
+              </div>
+
+              <div class="card-footer">
+              		<button type="submit" class="btn btn-primary btn-flat">
+              			<i class="fas fa-save"></i> Eliminar registro
+              		</button>
+                  <a href="{% url 'alumnos:lista'%}"><button type="submit" class="btn btn-danger btn-flat">
+                    <i class="fas fa-save"></i> Cancelar
+                  </button>
+              </div>
+             
+</div>
+</form>
+
+{% endblock %}

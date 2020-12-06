@@ -1,0 +1,145 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% trans 'Inicio de Sesión' %}</title>
+	<link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'lib/adminlte-3.0.4/css/adminlte.min.css' %}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="{% static 'lib/adminlte-3.0.4/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'lib/adminlte-3.0.4/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'lib/adminlte-3.0.4/js/adminlte.min.js' %}"></script>
+<style type="text/css">
+	*{
+		box-sizing: border-box;
+	}
+	body{
+		margin: 0;
+		font-family: sans-serif;
+		background-size: 100vw 100vh;
+		background-attachment: fixed;
+	}
+	h1{
+		color: #fff;
+		text-align: center
+	}
+
+	.form{
+		width: 95%;
+		max-width: 500px;
+		padding: 0px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		background-color: skyblue;
+		opacity: 0.85;
+		border-radius: 7px;
+	}
+	.form_titulo{
+		background-color: deepskyblue;
+		color: #fff;
+		padding: 20px;
+		text-align: center;
+		font-weight: 100;
+		font-size: 30px;
+		border-top-left-radius: 7px;
+		border-top-right-radius: 7px;
+		border-bottom: 5px solid crimson;
+	}
+	.contenedor-inputs{
+		padding: 10px 30px;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	input{
+		opacity: 1;
+		margin: 3px ;
+		padding: 15px;
+		font-size: 16px;
+		border-radius: 3px;
+		border: 1px solid darkgray;
+	}
+
+	.input-48{
+		width: 48%;
+
+	}
+	.input-100{
+		width: 100%;
+	}
+	.btn-enviar{
+		background-color: crimson;
+		color: #fff;
+		margin: auto;
+		padding: 10px 40px;
+		cursor: pointer;
+		font-size: 18px;
+	}
+	.btn-enviar:active{
+		transform:  scale(1.05);
+	}
+	.btn-enviar:hover{
+		background-color: #f88; 
+	}
+	legend{
+		background-color: deepskyblue;
+		color: white;
+		padding: 5px 10px;
+		font-size: 15px;
+
+
+	}	
+
+
+</style>
+
+
+
+
+</head>
+<body>	
+	<form action="login" method="POST" class="form">
+		{% csrf_token %}
+		<h2 class="form_titulo">{% trans 'Inicio de Sesión' %}</h2>
+		<div class="contenedor-inputs">	
+			<input type="text" name="username" placeholder="{% trans 'Usuario' %}" class="input-100" required>
+			<input type="password" name="password" placeholder="{% trans 'Contraseña' %}" class="input-100" required>
+			<input type="submit"  class="btn btn-success btn-sm btn-block" value="{% trans 'Iniciar Sesión' %}">
+			{% for message in messages%}
+				<h3 style="color: red; font-size: 15px">{{message}}</h3>
+			{% endfor %}
+			<a href=""><label>{% trans '¿Olvido su contraseña?' %}</label></a>
+
+		</div>
+	</form>
+				<form action="{% url 'set_language' %}" method="POST" class="form">
+					{% csrf_token %}
+					<fieldset>
+						<legend>{% trans 'Selección de Idioma' %}</legend>
+					<input type="hidden" name="next" value="{{ redirect_to }}">
+					<select name="language" id="" class="form-control">
+						{% get_available_languages as LANGUAGES %}
+						{% get_language_info_list for LANGUAGES as languages %}
+						{% for language in languages %}
+							<option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+								{{ language.name_local }} - {{ language.code }}
+							</option>
+						{% endfor %}
+					</select>
+					<input type="submit" value="{% trans 'Traducir' %}"class="btn btn-success btn-sm btn-block">
+					</fieldset>	
+				</form>
+			
+
+			
+
+</body>
+</html>
